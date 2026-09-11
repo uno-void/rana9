@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terima Kasih - Jeda Makna</title>
+    <style>
+        body {
+            background-color: #083335;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* DIUBAH DARI CENTER: Agar konten mulai dari atas */
+            min-height: 50vh;
+            margin: 0;
+            text-align: center;
+            padding: 30px 20px 20px 20px; /* DIUBAH: Padding atas dibuat 60px agar tidak nabrak ujung atas HP */
+        }
+        h1 { letter-spacing: 5px; font-weight: 300; margin-top:20px; margin-bottom: 2px; }
+        p { color: #888; margin-top: 4px; margin-bottom: 30px; font-size: 11px; }
+        #preview {
+            max-width: 90%;
+            max-height: 100vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+        .btn-unduh {
+            background: white;
+            color: black;
+            padding: 10px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        .btn-unduh:hover { transform: scale(1.05); background: #ccc; }
+    </style>
+</head>
+<body>
+
+    <h1>TERIMA KASIH</h1>
+    <p>Telah mengabadikan momentmu di pameran kami.</p>
+    
+    <img id="preview" src="" alt="Foto Kamu">
+
+    <br>
+    <a id="downloadLink" href="#" class="btn-unduh">UNDUH FOTO</a>
+
+    <!-- <script>
+        // Mengambil URL foto dari parameter link (URL)
+        const urlParams = new URLSearchParams(window.location.search);
+        const fotoUrl = urlParams.get('foto');
+        // const fotoUrl = 'coba.jpg';
+
+        if (fotoUrl) {
+            document.getElementById('preview').src = fotoUrl;
+            document.getElementById('downloadLink').href = fotoUrl;
+            // Menambahkan atribut download (hanya berfungsi jika satu domain, tapi membantu di beberapa browser)
+            document.getElementById('downloadLink').setAttribute('download', 'JedaMakna_Photo.jpg');
+        }
+    </script> -->
+    <script>
+        // Mengambil URL foto dari parameter QR Code
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Ingat! Hapus atau jadikan komentar baris 'coba.jpg' saat sudah online
+        // const fotoUrl = 'coba.jpg'; 
+        const fotoUrl = urlParams.get('foto'); 
+
+        const btnUnduh = document.getElementById('downloadLink');
+
+        if (fotoUrl) {
+            // Tampilkan gambar di layar
+            document.getElementById('preview').src = fotoUrl;
+            
+            // Ubah teks tombol sementara
+            btnUnduh.innerText = "MENYIAPKAN...";
+            btnUnduh.style.pointerEvents = "none"; // Matikan klik sebentar biar loading
+
+            // Trik Fetch Blob: Memaksa browser mendownload lintas server (Cloudinary)
+            fetch(fotoUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const objectUrl = window.URL.createObjectURL(blob);
+                    btnUnduh.href = objectUrl;
+                    btnUnduh.setAttribute('download', `JedaMakna_${new Date().getTime()}.jpg`);
+                    
+                    // Kembalikan tombol seperti semula setelah siap
+                    btnUnduh.innerText = "UNDUH FOTO";
+                    btnUnduh.style.pointerEvents = "auto";
+                })
+                .catch(err => {
+                    // Kalau internet pengunjung sedang jelek, fallback (buka di tab baru)
+                    btnUnduh.href = fotoUrl;
+                    btnUnduh.target = "_blank";
+                    btnUnduh.innerText = "UNDUH FOTO";
+                    btnUnduh.style.pointerEvents = "auto";
+                });
+        }
+    </script>
+</body>
+</html>

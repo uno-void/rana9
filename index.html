@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photobooth Pameran - Jeda Makna</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Pengaturan Kamera -->
+    <div class="pengaturan">
+        <label for="pilihKamera">Device:</label>
+        <select id="pilihKamera"></select>
+    </div>
+
+    <!-- Preview Kamera -->
+    <div class="booth-container">
+        <video id="kamera" autoplay playsinline></video>
+        <div id="countdown">3</div>
+        <div id="flash"></div>
+    </div>
+    <div class="controls">
+        <div class="status-text" id="statusTeks">Tekan tombol untuk memotret</div>
+        <button id="btnAmbilFoto">Cekrek</button>
+    </div>
+
+    <!-- hasil -->
+    <div id="hasilOverlay">
+        <div class="hasil-container" id="hasilContainer">
+            <div class="qr-section" id="qrSection">
+                <div class="qr-title">SCAN UNTUK DOWNLOAD</div>
+                <div id="qrcode"></div>
+                <div class="qr-desc">Pastikan HP memiliki Internet</div>
+            </div>
+            <img id="gambarHasil" src="" alt="Hasil Photobooth">
+        </div>
+        <div class="pesan-sukses">FOTO BERHASIL DISIMPAN!</div>
+    </div>
+    <canvas id="kanvasFinal"></canvas>
+    <script src="script.js"></script>
+
+    <!-- <div id="pixel-pet">
+        <img src="dog.gif" alt="Hewan Pixel">
+    </div> -->
+</body>
+</html>

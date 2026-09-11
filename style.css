@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('1.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #000;
+    
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+}
+
+.booth-container {
+    position: absolute;
+    top: 14.5%;  
+    left: 23.2%;    
+    width: 53.6%;  
+    height: 70%;    
+    
+    background: #000;
+    border: none;
+    box-shadow: none; 
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 1; /* Menaruh video di atas background */
+    filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.8));
+}
+.booth-container::after {
+    display: none;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transform: scaleX(-1);
+    filter: contrast(1.05) brightness(1.02); 
+}
+.pengaturan {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%); 
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px); 
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pengaturan label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ccc;
+}
+
+select {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: #222;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.status-text {
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 200;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #fff;
+    animation: pulseText 2.5s infinite; 
+}
+
+button#btnAmbilFoto {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 30px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+button#btnAmbilFoto:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-color: white;
+}
+
+button#btnAmbilFoto:disabled {
+    opacity: 0;
+}
+
+#flash {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: white;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-out;
+    z-index: 5;
+}
+
+#countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 150px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 5px 30px rgba(0,0,0,0.8);
+    display: none;
+    z-index: 10;
+    animation: popScale 1s infinite;
+}
+
+#hasilOverlay {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    
+    /* Mengurangi ketebalan hitam menjadi hanya 35% agar transparan */
+    background-color: rgba(0, 0, 0, 0.35); 
+    
+    z-index: 100;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    /* Memperkuat efek blur kaca agar background asli tembus pandang tapi estetik */
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px); /* Dukungan untuk browser Safari/Mac */
+}
+
+#gambarHasil {
+    max-height: 80vh;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    animation: floatUp 0.8s forwards;
+}
+
+.pesan-sukses {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 200;
+    letter-spacing: 4px;
+    color: white;
+}
+
+canvas { display: none; }
+
+@keyframes pulseText { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes popScale { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; } 20% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; } }
+@keyframes floatUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.hasil-container {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+#gambarHasil {
+    max-height: 80vh;
+    border-radius: 2px;
+    box-shadow: 0 30px 80px rgba(0,0,0,1);
+    z-index: 10;
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    margin-right: 0;
+    border: 1px solid transparent;
+    
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.hasil-container.split .qr-section {
+    max-width: 400px; 
+    opacity: 1;
+    padding: 35px;
+    margin-right: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.qr-title {
+    color: white;
+    font-size: 15px; 
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    white-space: nowrap; 
+}
+
+#qrcode {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.qr-desc {
+    color: #cccccc;
+    font-size: 10px;
+    margin-top: 20px;
+    letter-spacing: 2px;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.6;
+}
+
+#pixel-pet {
+    position: absolute;
+    bottom: -0.5%;
+    
+    left: 870px; 
+    width: 300px; 
+    z-index: 30; 
+    pointer-events: none; 
+}
+
+#pixel-pet img {
+    width: 100%;
+    height: auto;
+     filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.8));
+}
